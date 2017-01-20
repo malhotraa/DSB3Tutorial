@@ -23,7 +23,7 @@ z = z position of slice in world coordinates mm
     v_diam = int(diam/spacing[0]+5)
     v_xmin = np.max([0,int(v_center[0]-v_diam)-5])
     v_xmax = np.min([width-1,int(v_center[0]+v_diam)+5])
-    v_ymin = np.max([0,int(v_center[1]-v_diam)-5]) 
+    v_ymin = np.max([0,int(v_center[1]-v_diam)-5])
     v_ymax = np.min([height-1,int(v_center[1]+v_diam)+5])
 
     v_xrange = range(v_xmin,v_xmax+1)
@@ -43,7 +43,7 @@ z = z position of slice in world coordinates mm
     return(mask)
 
 def matrix2int16(matrix):
-    ''' 
+    '''
 matrix must be a numpy array NXN
 Returns uint16 version
     '''
@@ -55,15 +55,15 @@ Returns uint16 version
 ############
 #
 # Getting list of image files
-luna_path = "/home/jonathan/LUNA2016/"
+luna_path = "/kaggle/dev/luna-2016-data/"
 luna_subset_path = luna_path+"subset1/"
-output_path = "/home/jonathan/tutorial/"
+output_path = "/kaggle/dev/luna-2016-data/output/"
 file_list=glob(luna_subset_path+"*.mhd")
 
 
 #####################
 #
-# Helper function to get rows in data frame associated 
+# Helper function to get rows in data frame associated
 # with each file
 def get_filename(case):
     global file_list
@@ -82,9 +82,9 @@ df_node = df_node.dropna()
 #
 fcount = 0
 for img_file in file_list:
-    print "Getting mask for image file %s" % img_file.replace(luna_subset_path,"")
+    print("Getting mask for image file %s", img_file.replace(luna_subset_path,""))
     mini_df = df_node[df_node["file"]==img_file] #get all nodules associate with file
-    if len(mini_df)>0:    # some files may not have a nodule--skipping those 
+    if len(mini_df)>0:    # some files may not have a nodule--skipping those
         biggest_node = np.argsort(mini_df["diameter_mm"].values)[-1]   # just using the biggest node
         node_x = mini_df["coordX"].values[biggest_node]
         node_y = mini_df["coordY"].values[biggest_node]
